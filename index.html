@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<style>
+      /* style.css */
+
+/* Global Styles */
+body {padding: 100px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-repeat: no-repeat;
+    
+    background-image: url('https://assets.skyfilabs.com/images/blog/innovative-image-processing-based-final-year-projects-for-students.jpg');
+    background-size: cover;
+}
+body div {
+background-repeat: no-repeat;
+  background-image: url('https://images.unsplash.com/photo-1608848461950-0fe51dfc41cb?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D');
+background-size: cover;
+border-radius: 10px;
+align:center;
+
+
+
+}
+
+	
+h1 {
+    color:violet;
+}
+
+/* Image Upload Styles */
+#imageInput {
+    margin: 10px 0;
+}
+
+/* Button Styles */
+button {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+    input{
+      
+      background-color: orange;
+      }
+
+/* Results Styles */
+#results {
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+  </style>
+    <title>Image Recognition</title>
+</head>
+<body>
+<table>
+<td>
+<div class = "box">
+    <h1 >Image Recognition</h1>
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="recognizeImage()">Recognize</button>
+    <div id="results"></div>
+</div>
+</td>
+</table>
+
+    <script>
+        function recognizeImage() {
+            const fileInput = document.getElementById('imageInput');
+            const resultsDiv = document.getElementById('results');
+
+            if (fileInput.files.length === 0) {
+                resultsDiv.innerHTML = "Please select an image.";
+                return;
+            }
+
+            const imageFile = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('image', imageFile);
+
+            fetch('/recognize', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                resultsDiv.innerHTML = `Recognition Result: ${data.result}`;
+            })
+            .catch(error => {
+                resultsDiv.innerHTML = 'Error: ' + error;
+            });
+        }
+    </script>
+</body>
+</html>
